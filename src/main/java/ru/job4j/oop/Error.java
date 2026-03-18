@@ -6,9 +6,6 @@ public class Error {
     private String message;
 
     public Error() {
-        active = true;
-        status = 400;
-        message = "bad request";
     }
 
     public Error(boolean active, int status, String message) {
