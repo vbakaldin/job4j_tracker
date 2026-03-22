@@ -16,7 +16,7 @@ public class Calculator {
     }
 
     public int divine(int y) {
-        return y/x;
+        return y / x;
     }
 
     public int sumAllOperation(int y) {
