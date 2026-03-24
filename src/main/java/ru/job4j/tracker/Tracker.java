@@ -33,13 +33,13 @@ public class Tracker {
 
     public boolean replace(int id, Item item) {
         int index = indexOf(id);
+        boolean result = false;
         if (index > -1) {
-            item.setId(items[index].getId());
+            item.setId(id);
             items[index] = item;
-            return true;
-        } else {
-            return false;
+            result = true;
         }
+        return result;
     }
 
     public Item[] findByName(String key) {
