@@ -17,8 +17,7 @@ public class Matches {
             if (matches > 0 && matches < 4 && matches <= count) {
                 count = count - matches;
                 turn = !turn;
-            } else
-            {
+            } else {
                 System.out.println(player + " вы ввели неверное число");
             }
         }
