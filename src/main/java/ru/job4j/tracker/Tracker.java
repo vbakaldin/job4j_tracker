@@ -55,15 +55,7 @@ public class Tracker {
     }
 
     public Item[] findAll() {
-        Item[] result = new Item[size];
-        int newSize = 0;
-        for (int index = 0; index < items.length; index++) {
-            if (items[index] != null) {
-                result[newSize] = items[index];
-                newSize++;
-            }
-        }
-        return Arrays.copyOf(result, newSize);
+        return Arrays.copyOf(items, size);
     }
 
     public void delete(int id) {
