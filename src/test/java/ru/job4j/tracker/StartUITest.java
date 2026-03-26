@@ -43,7 +43,7 @@ class StartUITest {
     }
 
     @Test
-    void whenDeleteItem() {
+    void whenDeleteItemNew() {
         Output output = new StubOutput();
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("Deleted item")); /* Добавляется в tracker новая заявка */
@@ -56,6 +56,19 @@ class StartUITest {
         };
         new StartUI(output).init(input, tracker, actions);
         assertThat(tracker.findById(item.getId())).isNull();
+    }
+
+    @Test
+    void whenDeleteItem() {
+        Tracker tracker = new Tracker();
+        Item item = new Item("new item");
+        tracker.add(item);
+        String[] answers = {
+                String.valueOf(item.getId()) // id сохраненной заявки в объект tracker.
+        };
+        StartUI.deleteItem(new MockInput(answers), tracker);
+        Item edited = tracker.findById(item.getId());
+        assertThat(edited).isNull();
     }
 
     @Test
