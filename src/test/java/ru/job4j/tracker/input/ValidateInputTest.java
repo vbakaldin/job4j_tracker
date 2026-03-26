@@ -16,7 +16,6 @@ class ValidateInputTest {
         assertThat(selected).isEqualTo(1);
     }
 
-
     @Test
     void whenValidInput() {
         Output output = new StubOutput();
