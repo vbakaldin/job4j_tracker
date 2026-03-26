@@ -29,7 +29,7 @@ class UserStoreTest {
         UserNotFoundException exception = assertThrows(
                 UserNotFoundException.class,
                 () -> {
-                    UserStore.findUser(users, "Vladimir" );
+                    UserStore.findUser(users, "Vladimir");
                 });
         assertThat(exception.getMessage()).isEqualTo("User not found");
     }
@@ -38,6 +38,6 @@ class UserStoreTest {
     public void whenFindUserSuccess() throws UserNotFoundException {
         User user = new User("Petr Arsentev", true);
         User[] users = {user};
-        assertThat(UserStore.findUser(users, "Petr Arsentev" )).isEqualTo(user);
+        assertThat(UserStore.findUser(users, "Petr Arsentev")).isEqualTo(user);
     }
 }
