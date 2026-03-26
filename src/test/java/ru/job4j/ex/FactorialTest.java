@@ -5,6 +5,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FactorialTest {
+    @Test
+    public void whenThreeThenSix() {
+        int result = Factorial.calc(3);
+        int expected = 6;
+        assertThat(result).isEqualTo(expected);
+    }
 
     @Test
     public void whenException() {
