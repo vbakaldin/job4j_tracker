@@ -32,14 +32,11 @@ public class PasswordValidator {
         }
 
         String passwordLowerCase = password.toLowerCase();
-        if (passwordLowerCase.contains("qwerty")
-                | passwordLowerCase.contains("12345")
-                | passwordLowerCase.contains("password")
-                | passwordLowerCase.contains("admin")
-                | passwordLowerCase.contains("user")) {
-
-            throw new IllegalArgumentException("Password shouldn't contain substrings: qwerty, 12345, password, admin, user");
-        }
+        for (String word : FORBIDDEN) {
+           if (passwordLowerCase.contains(word)) {
+               throw new IllegalArgumentException("Password shouldn't contain substrings: " + String.join(", ", FORBIDDEN));
+           }
+       }
 
         boolean hasUpCase = false;
         boolean hasLowCase = false;
@@ -59,6 +56,9 @@ public class PasswordValidator {
             }
             if (!Character.isLetterOrDigit(symbol)) {
                 hasSpecial = true;
+            }
+            if (hasUpCase && hasLowCase && hasDigit && hasSpecial) {
+                break;
             }
         }
 
