@@ -56,8 +56,9 @@ public class Tracker {
     }
 
     public void delete(int id) {
-        if (indexOf(id) != -1) {
-            items.remove(indexOf(id));
+        int index = indexOf(id);
+        if (index != -1) {
+            items.remove(index);
         }
     }
 }
