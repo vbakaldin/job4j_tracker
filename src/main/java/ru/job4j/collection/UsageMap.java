@@ -10,7 +10,6 @@ public class UsageMap {
         map.put("vldimir_bakalind@yandex.ru", "Vladimir Ivanov");
         map.put("vldimir_Sidorov@yandex.ru", "Vladimir Sidorov");
 
-
         for (String key : map.keySet()) {
             String value = map.get(key);
             System.out.println(key + " = " + value);
