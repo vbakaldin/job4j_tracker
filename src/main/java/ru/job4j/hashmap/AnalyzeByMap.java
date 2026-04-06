@@ -12,7 +12,7 @@ public class AnalyzeByMap {
                 count++;
             }
         }
-        return sum/count;
+        return sum / count;
     }
 
     public static List<Label> averageScoreByPupil(List<Pupil> pupils) {
@@ -24,7 +24,7 @@ public class AnalyzeByMap {
                 sum = sum + subject.score();
                 count++;
             }
-            labels.add(new Label(pupil.name(), sum/count));
+            labels.add(new Label(pupil.name(), sum / count));
         }
         return labels;
     }
