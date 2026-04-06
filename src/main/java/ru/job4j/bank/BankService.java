@@ -1,8 +1,5 @@
 package ru.job4j.bank;
 
-import ru.job4j.bank.Account;
-import ru.job4j.bank.User;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +13,7 @@ public class BankService {
     }
 
     public void deleteUser(String passport) {
-        users.remove(findByPassport(passport));
+        users.remove(new User(passport, ""));
     }
 
     public void addAccount(String passport, Account account) {
@@ -24,7 +21,7 @@ public class BankService {
         if (user != null) {
             List<Account> accounts = users.get(user);
             if (!accounts.contains(account)) {
-                users.get(user).add(account);
+                accounts.add(account);
             }
         }
     }
@@ -55,34 +52,14 @@ public class BankService {
                                  String destinationPassport, String destinationRequisite,
                                  double amount) {
         boolean result = false;
-        User sourceUser = findByPassport(sourcePassport);
-        User destinationUser = findByPassport(destinationPassport);
-        if (sourceUser != null && destinationUser != null) {
-            List<Account> sourceAccounts = users.get(sourceUser);
-            List<Account> destinationAccounts = users.get(destinationUser);
-            Account sourceAccount = null;
-            Account destinationAccount = null;
-
-            for (Account account : sourceAccounts) {
-                if (account.getRequisite().equals(sourceRequisite)) {
-                    sourceAccount = account;
-                    break;
-                }
-
-            }
-            for (Account account : destinationAccounts) {
-                if (account.getRequisite().equals(destinationRequisite)) {
-                    destinationAccount = account;
-                    break;
-                }
-            }
-            if (sourceAccount != null && destinationAccount != null) {
-                if (sourceAccount.getBalance() >= amount) {
-                    sourceAccount.setBalance(sourceAccount.getBalance() - amount);
-                    destinationAccount.setBalance(destinationAccount.getBalance() + amount);
-                    result = true;
-                }
-            }
+        Account sourceAccount = findByRequisite(sourcePassport,  sourceRequisite);
+        Account destinationAccount = findByRequisite(destinationPassport, destinationRequisite);
+        if (sourceAccount != null && destinationAccount != null) {
+             if (sourceAccount.getBalance() >= amount) {
+                   sourceAccount.setBalance(sourceAccount.getBalance() - amount);
+                   destinationAccount.setBalance(destinationAccount.getBalance() + amount);
+                   result = true;
+             }
         }
         return result;
     }
