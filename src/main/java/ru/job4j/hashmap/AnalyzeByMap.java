@@ -35,11 +35,7 @@ public class AnalyzeByMap {
 
         for (Pupil pupil : pupils) {
             for (Subject subject : pupil.subjects()) {
-                if  (!scores.containsKey(subject.name())) {
-                    scores.put(subject.name(), subject.score());
-                } else {
-                    scores.put(subject.name(), scores.get(subject.name()) + subject.score());
-                }
+                scores.put(subject.name(), scores.getOrDefault(subject.name(), 0) + subject.score());
             }
         }
 
