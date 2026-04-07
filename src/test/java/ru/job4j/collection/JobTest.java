@@ -54,6 +54,7 @@ class JobTest {
         );
         assertThat(rsl).isLessThan(0);
     }
+
     @Test
     public void whenComparatorByPriorityDesc() {
         Comparator<Job> cmpPriority = new JobDescByPriority();
