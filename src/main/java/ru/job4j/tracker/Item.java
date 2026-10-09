@@ -16,7 +16,7 @@ public class Item {
         this.name = name;
     }
 
-    public Item(int id, String name) {
+    public Item(int id, String name, LocalDateTime created) {
         this.id = id;
         this.name = name;
     }
@@ -39,6 +39,10 @@ public class Item {
 
     public LocalDateTime getCreated() {
         return this.created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 
     @Override
