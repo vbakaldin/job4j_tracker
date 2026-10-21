@@ -12,7 +12,7 @@ public class SqlTracker implements Store {
 
     private Connection connection;
 
-    public SqlTracker() {
+    public SqlTracker() throws TrackerSQLException {
         init();
     }
 
@@ -20,7 +20,7 @@ public class SqlTracker implements Store {
         this.connection = connection;
     }
 
-    private void init() {
+    private void init() throws TrackerSQLException {
         try (InputStream input = SqlTracker.class.getClassLoader()
                 .getResourceAsStream("db/liquibase.properties")) {
             Properties config = new Properties();
@@ -32,7 +32,7 @@ public class SqlTracker implements Store {
                     config.getProperty("password")
             );
         } catch (Exception e) {
-            throw new IllegalStateException(e);
+            throw new TrackerSQLException("Не удалось подключиться к базе данных трекера.", e);
         }
     }
 
@@ -44,7 +44,7 @@ public class SqlTracker implements Store {
     }
 
     @Override
-    public Item add(Item item) {
+    public Item add(Item item) throws TrackerSQLException {
         try (var statement = connection.prepareStatement(
                 "INSERT INTO items (name, created) VALUES (?, ?)",
                 Statement.RETURN_GENERATED_KEYS
@@ -58,13 +58,13 @@ public class SqlTracker implements Store {
                 }
             }
         } catch (SQLException e) {
-            throw new IllegalStateException(e);
+            throw new TrackerSQLException("Не удалось добавить заявку: " + item.getName(), e);
         }
         return item;
     }
 
     @Override
-    public boolean replace(int id, Item item) {
+    public boolean replace(int id, Item item) throws TrackerSQLException {
         boolean result;
         try (var statement = connection.prepareStatement(
                 "UPDATE items SET name = ?, created = ? WHERE id = ?"
@@ -77,25 +77,25 @@ public class SqlTracker implements Store {
                 item.setId(id);
             }
         } catch (SQLException e) {
-            throw new IllegalStateException(e);
+            throw new TrackerSQLException("Не удалось заменить заявку с id: " + id, e);
         }
         return result;
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws TrackerSQLException {
         try (var statement = connection.prepareStatement(
                 "DELETE FROM items WHERE id = ?"
         )) {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new IllegalStateException(e);
+            throw new TrackerSQLException("Не удалось удалить заявку с id: " + id, e);
         }
     }
 
     @Override
-    public List<Item> findAll() {
+    public List<Item> findAll() throws TrackerSQLException {
         List<Item> result = new ArrayList<>();
         try (var statement = connection.prepareStatement(
                 "SELECT id, name, created FROM items ORDER BY id"
@@ -104,13 +104,13 @@ public class SqlTracker implements Store {
                 result.add(createItem(resultSet));
             }
         } catch (SQLException e) {
-            throw new IllegalStateException(e);
+            throw new TrackerSQLException("Не удалось получить список заявок.", e);
         }
         return result;
     }
 
     @Override
-    public List<Item> findByName(String key) {
+    public List<Item> findByName(String key) throws TrackerSQLException {
         List<Item> result = new ArrayList<>();
         try (var statement = connection.prepareStatement(
                 "SELECT id, name, created FROM items WHERE name = ? ORDER BY id"
@@ -122,13 +122,13 @@ public class SqlTracker implements Store {
                 }
             }
         } catch (SQLException e) {
-            throw new IllegalStateException(e);
+            throw new TrackerSQLException("Не удалось найти заявки с именем: " + key, e);
         }
         return result;
     }
 
     @Override
-    public Item findById(int id) {
+    public Item findById(int id) throws TrackerSQLException {
         Item result = null;
         try (var statement = connection.prepareStatement(
                 "SELECT id, name, created FROM items WHERE id = ?"
@@ -140,7 +140,7 @@ public class SqlTracker implements Store {
                 }
             }
         } catch (SQLException e) {
-            throw new IllegalStateException(e);
+            throw new TrackerSQLException("Не удалось найти заявку с id: " + id, e);
         }
         return result;
     }

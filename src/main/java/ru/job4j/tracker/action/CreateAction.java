@@ -1,6 +1,7 @@
 package ru.job4j.tracker.action;
 
 import ru.job4j.tracker.Store;
+import ru.job4j.tracker.TrackerSQLException;
 import ru.job4j.tracker.input.Input;
 import ru.job4j.tracker.Item;
 import ru.job4j.tracker.output.Output;
@@ -18,7 +19,7 @@ public class CreateAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, Store tracker) {
+    public boolean execute(Input input, Store tracker) throws TrackerSQLException {
         output.println("=== Создание новой заявки ===");
         String name = input.askStr("Введите имя: ");
         Item item = new Item(name);

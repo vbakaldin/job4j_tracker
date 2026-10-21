@@ -24,7 +24,11 @@ public class StartUI {
                 continue;
             }
             UserAction action = actions.get(select);
-            run = action.execute(input, tracker);
+            try {
+                run = action.execute(input, tracker);
+            } catch (TrackerSQLException e) {
+                output.println(e.getMessage());
+            }
         }
     }
 
@@ -35,18 +39,22 @@ public class StartUI {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws TrackerSQLException {
         Output output = new ConsoleOutput();
         Input input = new ValidateInput(output, new ConsoleInput());
-        Store tracker = new SqlTracker();
-        List<UserAction> actions = Arrays.asList(
-            new CreateAction(output),
-            new FindAllAction(output),
-            new ReplaceAction(output),
-            new DeleteAction(output),
-            new FindByIdAction(output),
-            new FindByNameAction(output),
-            new ExitAction(output));
-        new StartUI(output).init(input, tracker, actions);
+        try {
+            Store tracker = new SqlTracker();
+            List<UserAction> actions = Arrays.asList(
+                    new CreateAction(output),
+                    new FindAllAction(output),
+                    new ReplaceAction(output),
+                    new DeleteAction(output),
+                    new FindByIdAction(output),
+                    new FindByNameAction(output),
+                    new ExitAction(output));
+            new StartUI(output).init(input, tracker, actions);
+        } catch (TrackerSQLException e) {
+            output.println(e.getMessage());
+        }
     }
 }
