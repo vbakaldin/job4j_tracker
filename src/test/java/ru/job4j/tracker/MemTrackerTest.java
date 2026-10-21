@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class MemTrackerTest {
     @Test
-    public void whenAddNewItemThenTrackerHasSameItem() {
+    public void whenAddNewItemThenTrackerHasSameItem() throws TrackerSQLException {
         Store tracker = new MemTracker();
         Item item = new Item();
         item.setName("test1");
@@ -19,7 +19,7 @@ public class MemTrackerTest {
     }
 
     @Test
-    public void whenTestFindById() {
+    public void whenTestFindById() throws TrackerSQLException {
         Store tracker = new MemTracker();
         Item bug = new Item("Bug");
         Item item = tracker.add(bug);
@@ -28,7 +28,7 @@ public class MemTrackerTest {
     }
 
     @Test
-    public void whenTestFindAll() {
+    public void whenTestFindAll() throws TrackerSQLException {
         Store tracker = new MemTracker();
         Item first = new Item("First");
         Item second = new Item("Second");
@@ -39,7 +39,7 @@ public class MemTrackerTest {
     }
 
     @Test
-    public void whenTestFindByNameCheckArrayLength() {
+    public void whenTestFindByNameCheckArrayLength() throws TrackerSQLException {
         Store tracker = new MemTracker();
         Item first = new Item("First");
         Item second = new Item("Second");
@@ -53,7 +53,7 @@ public class MemTrackerTest {
     }
 
     @Test
-    public void whenTestFindByNameCheckSecondItemName() {
+    public void whenTestFindByNameCheckSecondItemName() throws TrackerSQLException {
         Store tracker = new MemTracker();
         Item first = new Item("First");
         Item second = new Item("Second");
@@ -67,7 +67,7 @@ public class MemTrackerTest {
     }
 
     @Test
-    public void whenReplaceItemIsSuccessful() {
+    public void whenReplaceItemIsSuccessful() throws TrackerSQLException {
         Store tracker = new MemTracker();
         Item item = new Item("Bug");
         tracker.add(item);
@@ -78,7 +78,7 @@ public class MemTrackerTest {
     }
 
     @Test
-    public void whenReplaceItemIsNotSuccessful() {
+    public void whenReplaceItemIsNotSuccessful() throws TrackerSQLException {
         Store tracker = new MemTracker();
         Item item = new Item("Bug");
         tracker.add(item);
@@ -90,7 +90,7 @@ public class MemTrackerTest {
     }
 
     @Test
-    public void whenDeleteItemIsSuccessful() {
+    public void whenDeleteItemIsSuccessful() throws TrackerSQLException {
         Store tracker = new MemTracker();
         Item item = new Item("Bug");
         tracker.add(item);
@@ -100,7 +100,7 @@ public class MemTrackerTest {
     }
 
     @Test
-    public void whenDeleteItemIsNotSuccessful() {
+    public void whenDeleteItemIsNotSuccessful() throws TrackerSQLException {
         Store tracker = new MemTracker();
         Item item = new Item("Bug");
         tracker.add(item);

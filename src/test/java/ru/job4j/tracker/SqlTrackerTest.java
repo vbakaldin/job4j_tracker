@@ -51,7 +51,7 @@ public class SqlTrackerTest {
     }
 
     @Test
-    public void whenSaveItemAndFindByGeneratedIdThenMustBeTheSame() {
+    public void whenSaveItemAndFindByGeneratedIdThenMustBeTheSame() throws TrackerSQLException {
         SqlTracker tracker = new SqlTracker(connection);
         Item item = new Item("item");
         tracker.add(item);
@@ -59,27 +59,27 @@ public class SqlTrackerTest {
     }
 
     @Test
-    public void whenTestFindById() {
+    public void whenTestFindById() throws TrackerSQLException {
         SqlTracker tracker = new SqlTracker(connection);
         Item bug = new Item("Bug");
         Item item = tracker.add(bug);
         Item result = tracker.findById(item.getId());
-        assertThat(result.getName()).isEqualTo(item.getName());
+        assertThat(result).isEqualTo(item);
     }
 
     @Test
-    public void whenTestFindAll() {
+    public void whenTestFindAll() throws TrackerSQLException {
         SqlTracker tracker = new SqlTracker(connection);
         Item first = new Item("First");
         Item second = new Item("Second");
         tracker.add(first);
         tracker.add(second);
         Item result = tracker.findAll().get(0);
-        assertThat(result.getName()).isEqualTo(first.getName());
+        assertThat(result).isEqualTo(first);
     }
 
     @Test
-    public void whenTestFindByNameCheckArrayLength() {
+    public void whenTestFindByNameCheckArrayLength() throws TrackerSQLException {
         SqlTracker tracker = new SqlTracker(connection);
         Item first = new Item("First");
         Item second = new Item("Second");
@@ -92,7 +92,7 @@ public class SqlTrackerTest {
     }
 
     @Test
-    public void whenTestFindByNameCheckSecondItemName() {
+    public void whenTestFindByNameCheckSecondItemName() throws TrackerSQLException {
         SqlTracker tracker = new SqlTracker(connection);
         Item first = new Item("First");
         Item second = new Item("Second");
@@ -102,11 +102,11 @@ public class SqlTrackerTest {
         tracker.add(new Item("Second"));
         tracker.add(new Item("First"));
         Item result = tracker.findByName(second.getName()).get(0);
-        assertThat(result.getName()).isEqualTo(second.getName());
+        assertThat(result).isEqualTo(second);
     }
 
     @Test
-    public void whenReplaceItemIsSuccessful() {
+    public void whenReplaceItemIsSuccessful() throws TrackerSQLException {
         SqlTracker tracker = new SqlTracker(connection);
         Item item = new Item("Bug");
         tracker.add(item);
@@ -117,7 +117,7 @@ public class SqlTrackerTest {
     }
 
     @Test
-    public void whenReplaceItemIsNotSuccessful() {
+    public void whenReplaceItemIsNotSuccessful() throws TrackerSQLException {
         SqlTracker tracker = new SqlTracker(connection);
         Item item = new Item("Bug");
         tracker.add(item);
@@ -128,7 +128,7 @@ public class SqlTrackerTest {
     }
 
     @Test
-    public void whenDeleteItemIsSuccessful() {
+    public void whenDeleteItemIsSuccessful() throws TrackerSQLException {
         SqlTracker tracker = new SqlTracker(connection);
         Item item = new Item("Bug");
         tracker.add(item);
@@ -138,7 +138,7 @@ public class SqlTrackerTest {
     }
 
     @Test
-    public void whenDeleteItemIsNotSuccessful() {
+    public void whenDeleteItemIsNotSuccessful() throws TrackerSQLException {
         SqlTracker tracker = new SqlTracker(connection);
         Item item = new Item("Bug");
         tracker.add(item);

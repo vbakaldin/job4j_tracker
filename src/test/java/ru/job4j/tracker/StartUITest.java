@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class StartUITest {
     @Test
-    void whenCreateItem() {
+    void whenCreateItem() throws TrackerSQLException {
         Output output = new StubOutput();
         Input input = new MockInput(
                 new String[] {"0", "Item name", "1"}
@@ -28,7 +28,7 @@ class StartUITest {
     }
 
     @Test
-    void whenReplaceItem() {
+    void whenReplaceItem() throws TrackerSQLException {
         Output output = new StubOutput();
         Store tracker = new MemTracker();
         Item item = tracker.add(new Item("Replaced item")); /* Добавляется в tracker новая заявка */
@@ -44,7 +44,7 @@ class StartUITest {
     }
 
     @Test
-    void whenDeleteItem() {
+    void whenDeleteItem() throws TrackerSQLException {
         Output output = new StubOutput();
         Store tracker = new MemTracker();
         Item item = tracker.add(new Item("Deleted item")); /* Добавляется в tracker новая заявка */
@@ -76,7 +76,7 @@ class StartUITest {
     }
 
     @Test
-    void whenReplaceItemTestOutputIsSuccessfully() {
+    void whenReplaceItemTestOutputIsSuccessfully() throws TrackerSQLException {
         Output output = new StubOutput();
         Store tracker = new MemTracker();
         Item one = tracker.add(new Item("test1"));
@@ -103,7 +103,7 @@ class StartUITest {
     }
 
     @Test
-    void whenFindAllTestOutputIsSuccessfully() {
+    void whenFindAllTestOutputIsSuccessfully() throws TrackerSQLException {
         Output output = new StubOutput();
         Store tracker = new MemTracker();
         Item one = tracker.add(new Item("test"));
@@ -129,7 +129,7 @@ class StartUITest {
     }
 
     @Test
-    void whenFindByNameTestOutputIsSuccessfully() {
+    void whenFindByNameTestOutputIsSuccessfully() throws TrackerSQLException {
         Output output = new StubOutput();
         Store tracker = new MemTracker();
         Item one = tracker.add(new Item("test"));
@@ -155,7 +155,7 @@ class StartUITest {
     }
 
     @Test
-    void whenFindByIdTestOutputIsSuccessfully() {
+    void whenFindByIdTestOutputIsSuccessfully() throws TrackerSQLException {
         Output output = new StubOutput();
         Store tracker = new MemTracker();
         Item one = tracker.add(new Item("test"));
